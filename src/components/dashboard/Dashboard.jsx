@@ -1,11 +1,17 @@
 import { render } from "@testing-library/react";
 import React, { Component } from "react";
 import { useSelector } from "react-redux";
+import { useFirestore, useFirestoreConnect } from "react-redux-firebase";
+import { Redirect } from "react-router-dom";
 import TaskList from "../tasks/TaskList";
 import Notifications from "./Notifications";
 
 const Dashboard = () => {
-  const { tasks } = useSelector((state) => state.task);
+  useFirestoreConnect("tasks");
+
+  const { tasks } = useSelector((state) => state.firestore.ordered);
+  const auth = useSelector((state) => state.firebase.auth);
+  if (!auth.uid) return <Redirect to="/signin" />;
   return (
     <div className="dashboard container">
       {console.log(tasks)}

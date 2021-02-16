@@ -1,18 +1,21 @@
 import React, { Component } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { signOut } from "../../store/actions/authActions";
 
-const SignedInLinks = () => {
+const SignedInLinks = ({ profile }) => {
+  const dispatch = useDispatch();
   return (
     <ul className="right">
       <li>
-        <NavLink to="/">New Task</NavLink>
+        <NavLink to="/create">New Task</NavLink>
       </li>
       <li>
-        <NavLink to="/">Logout</NavLink>
+        <a onClick={() => dispatch(signOut())}>Logout</a>
       </li>
       <li>
         <NavLink to="/" className="btn btn-float pink lighten-1">
-          NN
+          {profile.initials}
         </NavLink>
       </li>
     </ul>

@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { signUp } from "../../store/actions/authActions";
 function SignUp() {
+  const dispatch = useDispatch();
+  const authError = useSelector((state) => state.auth.authError);
+
+  const auth = useSelector((state) => state.firebase.auth);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -16,7 +22,9 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(user);
+    dispatch(signUp(user));
   };
+  if (auth.uid) return <Redirect to="/" />;
 
   return (
     <div className="container">
@@ -40,6 +48,9 @@ function SignUp() {
         </div>
         <div className="input-field">
           <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
+          <div className="red-text center">
+            {authError ? <p>{authError}</p> : null}
+          </div>
         </div>
       </form>
     </div>

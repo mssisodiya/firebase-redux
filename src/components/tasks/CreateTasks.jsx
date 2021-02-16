@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createTask } from "../../store/reducers/actions/taskActions";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { createTask } from "../../store/actions/taskActions";
 
-function CreateTask() {
+function CreateTask(props) {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.firebase.auth);
   const [task, setTask] = useState({
     title: "",
     content: "",
@@ -18,7 +20,9 @@ function CreateTask() {
     e.preventDefault();
     // console.log(user);
     dispatch(createTask(task));
+    props.history.push("/");
   };
+  if (!auth.uid) return <Redirect to="/signin" />;
 
   return (
     <div className="container">
@@ -37,7 +41,7 @@ function CreateTask() {
           />
         </div>
         <div className="input-field">
-          <button className="btn pink lighten-1 z-depth-0">Log In</button>
+          <button className="btn pink lighten-1 z-depth-0">Add</button>
         </div>
       </form>
     </div>
