@@ -1,8 +1,8 @@
 const initState = {
   tasks: [
     { id: "1", title: "gym workout", content: "legs day" },
-    { id: "1", title: "git push", content: "code" },
-    { id: "1", title: "sleep", content: "good" },
+    { id: "2", title: "git push", content: "code" },
+    { id: "3", title: "sleep", content: "good" },
   ],
 };
 
